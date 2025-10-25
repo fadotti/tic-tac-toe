@@ -32,7 +32,7 @@ const playRound = function(cell, player) {
   }
 }
 
-function checkWinCondition() {
+function checkPlayerOneWinCondition() {
   if(ticTacToe.gameboard[0].player1 && ticTacToe.gameboard[1].player1 && ticTacToe.gameboard[2].player1) {return true}
   if(ticTacToe.gameboard[3].player1 && ticTacToe.gameboard[4].player1 && ticTacToe.gameboard[5].player1) {return true}
   if(ticTacToe.gameboard[6].player1 && ticTacToe.gameboard[7].player1 && ticTacToe.gameboard[8].player1) {return true}
@@ -41,7 +41,9 @@ function checkWinCondition() {
   if(ticTacToe.gameboard[2].player1 && ticTacToe.gameboard[5].player1 && ticTacToe.gameboard[8].player1) {return true}
   if(ticTacToe.gameboard[0].player1 && ticTacToe.gameboard[4].player1 && ticTacToe.gameboard[8].player1) {return true}
   if(ticTacToe.gameboard[2].player1 && ticTacToe.gameboard[4].player1 && ticTacToe.gameboard[6].player1) {return true}
+}
 
+function checkPlayerTwoWinCondition() {
   if(ticTacToe.gameboard[0].player2 && ticTacToe.gameboard[1].player2 && ticTacToe.gameboard[2].player2) {return true}
   if(ticTacToe.gameboard[3].player2 && ticTacToe.gameboard[4].player2 && ticTacToe.gameboard[5].player2) {return true}
   if(ticTacToe.gameboard[6].player2 && ticTacToe.gameboard[7].player2 && ticTacToe.gameboard[8].player2) {return true}
@@ -50,4 +52,33 @@ function checkWinCondition() {
   if(ticTacToe.gameboard[2].player2 && ticTacToe.gameboard[5].player2 && ticTacToe.gameboard[8].player2) {return true}
   if(ticTacToe.gameboard[0].player2 && ticTacToe.gameboard[4].player2 && ticTacToe.gameboard[8].player2) {return true}
   if(ticTacToe.gameboard[2].player2 && ticTacToe.gameboard[4].player2 && ticTacToe.gameboard[6].player2) {return true}
+}
+
+function checkTieCondition() {
+  let numberOfEmptyCells = ticTacToe.gameboard.reduce((accumulator, currentValue) => accumulator + currentValue.empty, 0)
+  return (numberOfEmptyCells == 0) ? true : false
+}
+
+function playGame() {
+  let player = 1;
+  let endOfGameMessage;
+  while(true) {
+    let cell = Number(prompt("Enter a whole number between 0 and 8"));
+    playRound(cell, player);
+    if(checkPlayerOneWinCondition()) {
+      endOfGameMessage = "Player One wins!";
+      break;
+    }
+    if(checkPlayerTwoWinCondition()) {
+      endOfGameMessage = "Player Two wins!";
+      break;
+    }
+    if(checkTieCondition()) {
+      endOfGameMessage = "It's a tie!"
+      break;
+    }
+    player = (player == 1) ? 2 : 1;
+  }
+
+  alert(endOfGameMessage);
 }
