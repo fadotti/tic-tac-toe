@@ -17,6 +17,9 @@ const ticTacToe = (function createGameboard() {
 })();
 
 const gameController = (function() {
+  let currentPlayer = 1;
+  let endOfGameMessage = '';
+
   const createPlayers = function(player1, player2) {
     return {player1, player2};
   }
@@ -60,37 +63,61 @@ const gameController = (function() {
     return (numberOfEmptyCells == 0) ? true : false
   }
 
-  function playGame() {
-    let player = 1;
-    let endOfGameMessage;
-    while(true) {
-      let cell = Number(prompt("Enter a whole number between 0 and 8"));
-      playRound(cell, player);
-      if(checkPlayerOneWinCondition()) {
-        endOfGameMessage = "Player One wins!";
-        break;
-      }
-      if(checkPlayerTwoWinCondition()) {
-        endOfGameMessage = "Player Two wins!";
-        break;
-      }
-      if(checkTieCondition()) {
-        endOfGameMessage = "It's a tie!"
-        break;
-      }
-      player = (player == 1) ? 2 : 1;
-    }
-
-    alert(endOfGameMessage);
-  }
-
   function resetGameboard() {
     ticTacToe.gameboard.forEach((cell) => {
       cell.empty = 1;
       cell.player1 = 0;
       cell.player2 = 0
     })
+
+    gridCells.forEach((cell) => cell.textContent = '');
+
+    gameController.currentPlayer = 1;
   }
 
-  return {createPlayers, playGame, resetGameboard}
+  return {
+          currentPlayer, 
+          endOfGameMessage, 
+          createPlayers, 
+          playRound, 
+          checkPlayerOneWinCondition, 
+          checkPlayerTwoWinCondition, 
+          checkTieCondition,
+          resetGameboard
+        }
 })();
+
+const gridCells = document.querySelectorAll(".grid-cell");
+
+gridCells.forEach((cell, index) => {
+  cell.addEventListener('click', () => {
+    console.log(index);
+    if(cell.textContent == '') {
+      if(gameController.currentPlayer == 1) {
+        cell.textContent = 'X';
+        gameController.playRound(index, gameController.currentPlayer);
+
+        if(gameController.checkPlayerOneWinCondition()) {
+          endOfGameMessage = "Player One wins!";
+          alert(endOfGameMessage);
+        }else if(gameController.checkTieCondition()) {
+          endOfGameMessage = "It's a tie!"
+          alert(endOfGameMessage);
+        }
+        gameController.currentPlayer = (gameController.currentPlayer == 1) ? 2 : 1;
+      } else if(gameController.currentPlayer == 2) {
+        cell.textContent = 'O';
+        gameController.playRound(index, gameController.currentPlayer);
+
+        if(gameController.checkPlayerTwoWinCondition()) {
+          endOfGameMessage = "Player Two wins!";
+          alert(endOfGameMessage);
+        }else if(gameController.checkTieCondition()) {
+          endOfGameMessage = "It's a tie!"
+          alert(endOfGameMessage);
+        }
+        gameController.currentPlayer = (gameController.currentPlayer == 1) ? 2 : 1;
+      }
+    }
+  })
+})

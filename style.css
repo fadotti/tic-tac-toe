@@ -1,0 +1,42 @@
+body {
+  display: flex;
+  justify-content: center;
+  background-color: #FBEFEE;
+}
+
+div.gameboard-section > div#column-container > h1 {
+  font-family: "Londrina Shadow", sans-serif;
+  font-size: 5rem;
+}
+
+div.gameboard-section > div#column-container > h1 > span:nth-child(1) {
+  color: #C179B9;
+}
+
+div.gameboard-section > div#column-container > h1 > span:nth-child(2) {
+  color: #A42CD6;
+}
+
+div.gameboard-section > div#column-container > h1 > span:nth-child(3) {
+  color: #502274;
+}
+
+div#gameboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 5px;
+  background-color: #2F242C;
+}
+
+div.grid-cell {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #FBEFEE;
+  display: grid;
+  place-items: center;
+}
+
+div.grid-cell:hover {
+  background-color: #E8A29C;
+}
