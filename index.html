@@ -3,16 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tic Tac Toe</title>
+  <title>Tic-tac-toe</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Londrina+Shadow&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+        font-family: 'Calculator';
+        src: url('assets/Calculator.woff2') format('woff2'),
+             url('assets/Calculator.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+        font-display: block;
+    }
+  </style>
 </head>
 <body>
   <div class="gameboard-section">
     <div id="column-container">
       <h1><span>Tic</span>-<span>tac</span>-<span>toe</span></h1>
+
+      <div>
+        <input type="text" placeholder="Enter player one's name" minlength="2" maxlength="50" pattern="[a-zA-Z]*" required>
+        <input type="text" placeholder="Enter player two's name" minlength="2" maxlength="50" pattern="[a-zA-Z]*" required>
+      </div>
+
+      <div>
+        <button id="play">Play</button>
+        <button id="restart">Restart</button>
+      </div>
+
+      <h2></h2>
 
       <div id="gameboard">
         <div class="grid-cell" id="item-0"></div>
@@ -25,6 +48,8 @@
         <div class="grid-cell" id="item-7"></div>
         <div class="grid-cell" id="item-8"></div>
       </div>
+
+      <div>Source code available at <a href="https://github.com/fadotti/tic-tac-toe">https://github.com/fadotti/tic-tac-toe</a></div>
     </div>
   </div>
 

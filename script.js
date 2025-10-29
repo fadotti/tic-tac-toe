@@ -19,10 +19,10 @@ const ticTacToe = (function createGameboard() {
 const gameController = (function() {
   let currentPlayer = 1;
   let endOfGameMessage = '';
-
-  const createPlayers = function(player1, player2) {
-    return {player1, player2};
-  }
+  let isGameOn = false;
+  let endOfGameTextElement = document.querySelector("div#column-container > h2");
+  let player1 = document.querySelectorAll("div#column-container > div:nth-child(2) > input")[0];
+  let player2 = document.querySelectorAll("div#column-container > div:nth-child(2) > input")[1];
 
   const playRound = function(cell, player) {
     if(ticTacToe.gameboard[cell].empty == 1) {
@@ -73,12 +73,20 @@ const gameController = (function() {
     gridCells.forEach((cell) => cell.textContent = '');
 
     gameController.currentPlayer = 1;
+
+    gameController.isGameOn = false;
+
+    playerNameInputs[0].value = '';
+    playerNameInputs[1].value = '';
   }
 
   return {
           currentPlayer, 
-          endOfGameMessage, 
-          createPlayers, 
+          endOfGameMessage,
+          isGameOn,
+          endOfGameTextElement, 
+          player1,
+          player2, 
           playRound, 
           checkPlayerOneWinCondition, 
           checkPlayerTwoWinCondition, 
@@ -87,22 +95,42 @@ const gameController = (function() {
         }
 })();
 
+const playerNameInputs = document.querySelectorAll("div#column-container > div > input");
+
+const playButton = document.querySelector("#play");
+
+playButton.addEventListener('click', () => {
+  if(playerNameInputs[0].checkValidity() && playerNameInputs[1].checkValidity()) {
+    gameController.isGameOn = true;
+    playerNameInputs[0].disabled = true;
+    playerNameInputs[1].disabled = true;
+  }
+})
+
+const restartButton = document.querySelector("#restart");
+
+restartButton.addEventListener('click', () => {
+  gameController.resetGameboard();
+  playerNameInputs[0].disabled = false;
+  playerNameInputs[1].disabled = false;
+  gameController.endOfGameTextElement.textContent = "";
+})
+
 const gridCells = document.querySelectorAll(".grid-cell");
 
 gridCells.forEach((cell, index) => {
   cell.addEventListener('click', () => {
-    console.log(index);
-    if(cell.textContent == '') {
+    if(gameController.isGameOn && cell.textContent == '') {
       if(gameController.currentPlayer == 1) {
         cell.textContent = 'X';
         gameController.playRound(index, gameController.currentPlayer);
 
         if(gameController.checkPlayerOneWinCondition()) {
-          endOfGameMessage = "Player One wins!";
-          alert(endOfGameMessage);
-        }else if(gameController.checkTieCondition()) {
-          endOfGameMessage = "It's a tie!"
-          alert(endOfGameMessage);
+          gameController.endOfGameTextElement.textContent = `${gameController.player1.value} wins!`;
+          gameController.isGameOn = false;
+        } else if(gameController.checkTieCondition()) {
+          gameController.endOfGameTextElement.textContent = "It's a tie!";
+          gameController.isGameOn = false;
         }
         gameController.currentPlayer = (gameController.currentPlayer == 1) ? 2 : 1;
       } else if(gameController.currentPlayer == 2) {
@@ -110,11 +138,11 @@ gridCells.forEach((cell, index) => {
         gameController.playRound(index, gameController.currentPlayer);
 
         if(gameController.checkPlayerTwoWinCondition()) {
-          endOfGameMessage = "Player Two wins!";
-          alert(endOfGameMessage);
-        }else if(gameController.checkTieCondition()) {
-          endOfGameMessage = "It's a tie!"
-          alert(endOfGameMessage);
+          gameController.endOfGameTextElement.textContent = `${gameController.player1.value} wins!`;
+          gameController.isGameOn = false;
+        } else if(gameController.checkTieCondition()) {
+          gameController.endOfGameTextElement.textContent = "It's a tie!";
+          gameController.isGameOn = false;
         }
         gameController.currentPlayer = (gameController.currentPlayer == 1) ? 2 : 1;
       }

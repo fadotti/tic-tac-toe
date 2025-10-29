@@ -2,11 +2,19 @@ body {
   display: flex;
   justify-content: center;
   background-color: #FBEFEE;
+  margin: 0;
+}
+
+div#column-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 div.gameboard-section > div#column-container > h1 {
   font-family: "Londrina Shadow", sans-serif;
   font-size: 5rem;
+  margin: 20px 0;
 }
 
 div.gameboard-section > div#column-container > h1 > span:nth-child(1) {
@@ -27,6 +35,7 @@ div#gameboard {
   grid-template-rows: repeat(3, 1fr);
   gap: 5px;
   background-color: #2F242C;
+  margin-bottom: 5px;
 }
 
 div.grid-cell {
@@ -35,8 +44,85 @@ div.grid-cell {
   background-color: #FBEFEE;
   display: grid;
   place-items: center;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 600;
+  font-size: 1.3rem;
 }
 
 div.grid-cell:hover {
   background-color: #E8A29C;
+}
+
+div#column-container > div:nth-child(2),
+div#column-container > div:nth-child(3) {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+div#column-container > h2 {
+  display: grid;
+  place-content: center;
+  height: 1rem;
+  font-family: "Orbitron", sans-serif;
+  color: #502274;
+}
+
+button {
+  height: 2.5rem;
+  width: 8rem;
+  background-color: #2F242C;
+  color: white;
+  font-size: 1.5rem;
+  font-family: "Orbitron", sans-serif;
+}
+
+input {
+  height: 2rem;
+  width: 9rem;
+  background-color: #2F242C;
+  color: white;
+  border: solid 5px #2F242C;
+}
+
+input::placeholder {
+  color: gainsboro;
+}
+
+input:user-invalid {
+  border: solid 5px red;
+}
+
+input:user-valid {
+  border: solid 5px green;
+}
+
+input:disabled {
+  color: #C179B9;
+}
+
+input:disabled:hover {
+  cursor: not-allowed;
+}
+
+div#column-container > *:not(:last-child) {
+  width: 80%;
+}
+
+div#column-container > div:last-child {
+  font-family: 'Calculator', sans-serif;
+  font-size: 1.3rem;
+  align-self: center;
+}
+
+div#column-container > div > a {
+  color: #2F242C;
+}
+
+div#column-container > div > a:visited {
+  color: #2F242C;
+}
+
+div#column-container > div > a:hover {
+  color: red;
 }
